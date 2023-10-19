@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Activation Code Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #0074d9;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Activation Code Verification</h1>
+        <form id="verification-form">
+            <label for="activation-code">Activation Code:</label>
+            <input type="text" id="activation-code" name="activation-code" required>
+
+            <button type="button" onclick="verifyActivationCode()">Verify</button>
+        </form>
+        <div id="verification-result"></div>
+    </div>
+    <script>
+        function verifyActivationCode() {
+            var activationCode = document.getElementById("activation-code").value;
+
+            // 在这里执行激活码验证
+            // 使用 AJAX 请求或其他方式将激活码发送到 Google Apps Script 以验证
+
+            // 示例：使用 AJAX 请求发送激活码到 Google Apps Script
+            var url = "https://script.google.com/macros/s/AKfycbwmAEJcEcWa6CE8b840ezaRTS49uHSyBTxDsck38LfpJ6Ia4SXqJaBxchlaydyl9UxNrA/exec"; // 替换为您的 Google Apps Script URL
+            var data = { activationCode: activationCode };
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    displayVerificationResult(response.message);
+                }
+            };
+            xhr.send(JSON.stringify(data));
+        }
+
+        function displayVerificationResult(message) {
+            var resultDiv = document.getElementById("verification-result");
+            resultDiv.innerHTML = message;
+        }
+    </script>
+</body>
+</html>
